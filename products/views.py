@@ -26,9 +26,9 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 def create_superuser(request):
 
-    username = "SuperUser1"
-    email = "superuser.com"
-    password = "SuperUser@123456789"
+    username = "Maddy"
+    email = "maddy@gmail.com"
+    password = "Maddy@123456789"
 
     if not User.objects.filter(username=username).exists():
         User.objects.create_superuser(username, email, password)
