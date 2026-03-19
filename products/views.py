@@ -7,6 +7,7 @@ from rest_framework import status
 from rest_framework import viewsets
 from django.contrib.auth.models import User
 from django.http import HttpResponse
+from django.contrib.auth import get_user_model
 
 # Create your views here.
 
@@ -20,31 +21,25 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
-# temp 
-
-
-
-from django.contrib.auth import get_user_model
-from django.http import HttpResponse
-
+# temp view for creating superuser
 User = get_user_model()
 
+@api_view(['POST'])
 def create_admin(request):
-    if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
+    username = request.data.get("username")
+    password = request.data.get("password")
 
-        if not username or not password:
-            return HttpResponse("Username and password required!", status=400)
+    if not username or not password:
+        return Response({"error": "Username and password required"}, status=400)
 
-        if User.objects.filter(username=username).exists():
-            return HttpResponse("Username already exists!", status=400)
+    if User.objects.filter(username=username).exists():
+        return Response({"error": "Username already exists"}, status=400)
 
-        User.objects.create_superuser(
-            username=username,
-            password=password
-        )
+    User.objects.create_superuser(
+        username=username,
+        password=password
+    )
 
-        return HttpResponse("Superuser created successfully!")
+    return Response({"message": "Superuser created successfully"})
 
-    return HttpResponse("Invalid request method!", status=405)
+    # test
