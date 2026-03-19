@@ -1,15 +1,18 @@
+# Django imports
 from django.shortcuts import render
-from products.models import Product
-from products.serializer import ProductSerializer
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework import viewsets
-from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
-from rest_framework.permissions import AllowAny
 from django.views.decorators.csrf import csrf_exempt
+
+# Third-party imports (DRF)
+from rest_framework import status, viewsets
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+
+# Local app imports
+from products.models import Product
+from products.serializer import ProductSerializer
 
 # Create your views here.
 
