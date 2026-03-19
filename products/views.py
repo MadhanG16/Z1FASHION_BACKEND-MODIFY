@@ -8,7 +8,7 @@ from rest_framework import viewsets
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
-
+from rest_framework.permissions import AllowAny
 # Create your views here.
 
 # @api_view(['GET'])
@@ -25,6 +25,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 User = get_user_model()
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def create_admin(request):
     username = request.data.get("username")
     password = request.data.get("password")
