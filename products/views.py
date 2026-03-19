@@ -9,6 +9,8 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from rest_framework.permissions import AllowAny
+from django.views.decorators.csrf import csrf_exempt
+
 # Create your views here.
 
 # @api_view(['GET'])
@@ -24,6 +26,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 # temp view for creating superuser
 User = get_user_model()
 
+@csrf_exempt
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def create_admin(request):
