@@ -24,14 +24,27 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 
 
-def create_superuser(request):
+from django.contrib.auth import get_user_model
+from django.http import HttpResponse
 
-    username = "Maddy"
-    email = "maddy@gmail.com"
-    password = "Maddy@123456789"
+User = get_user_model()
 
-    if not User.objects.filter(username=username).exists():
-        User.objects.create_superuser(username, email, password)
-        return HttpResponse("Superuser created successfully")
+def create_admin(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
 
-    return HttpResponse("Superuser already exists")
+        if not username or not password:
+            return HttpResponse("Username and password required!", status=400)
+
+        if User.objects.filter(username=username).exists():
+            return HttpResponse("Username already exists!", status=400)
+
+        User.objects.create_superuser(
+            username=username,
+            password=password
+        )
+
+        return HttpResponse("Superuser created successfully!")
+
+    return HttpResponse("Invalid request method!", status=405)

@@ -35,7 +35,7 @@ urlpatterns = [
     path('api/products/', ProductViewSet.as_view({'get': 'list'}), name='get_products'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('create-admin/', create_superuser, name='create_superuser'),
+    path('create-admin/', create_superuser, name='create_admin'),
 ]
 
 if settings.DEBUG:
